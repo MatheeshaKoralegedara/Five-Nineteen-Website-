@@ -22,7 +22,7 @@ export async function createGallery(title: string) {
 
     let slug = toSlug(clean);
     const existing = await db.select().from(galleries).where(eq(galleries.slug, slug));
-    if (existing.length) slug = '${slug}-${Date.now().toSttring(36)}';
+    if (existing.length) slug = `${slug}-${Date.now().toString(36)}`;
 
     const [gallery] = await db.insert(galleries).values({ title: clean, slug }).returning();
     refresh();
@@ -100,6 +100,16 @@ export async function updatePhoto(
     await requireAdmin();
     await db.update(photos).set(data).where(eq(photos.id, id));
     refresh();
+}
+
+export async function reorderPhotos(orderedIds: number[]) {
+  await requireAdmin();
+  await Promise.all(
+    orderedIds.map((id, i) =>
+      db.update(photos).set({ sortOrder: i }).where(eq(photos.id, id)),
+    ),
+  );
+  refresh();
 }
 
 export async function deletePhoto(id: number) {
