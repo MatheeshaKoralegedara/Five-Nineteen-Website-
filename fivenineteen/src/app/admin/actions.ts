@@ -1,6 +1,6 @@
 "use server"
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, updateTag } from "next/cache";
 import { eq, inArray } from "drizzle-orm";
 import { DeleteObjectCommand, DeleteObjectsCommand } from "@aws-sdk/client-s3";
 import { db } from "@/db";
@@ -8,7 +8,11 @@ import { galleries, photos, settings } from "@/db/schema";
 import { r2 } from "@/lib/r2";
 import { requireAdmin } from "@/lib/auth";
 
-const refresh = () => revalidatePath("/", "layout");
+
+const refresh = () => {
+    revalidatePath("/", "layout");
+    updateTag("portfolio");
+};
 
 const toSlug = (text: string) => 
     text.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
