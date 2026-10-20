@@ -20,7 +20,7 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: { default: `${site.name} — Photography`, template: `%s — ${site.name}` },
+  title: { default: `${site.name} by Matheesha Koralegedara`, template: `%s — ${site.name}` },
   description: site.description,
 };
 
