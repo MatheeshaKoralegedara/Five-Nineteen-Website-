@@ -18,6 +18,12 @@ export const InstagramIcon = ({ className = "size-5" }: P) => (
   </svg>
 );
 
+export const FacebookIcon = ({ className = "size-5" }: P) => (
+  <svg {...base} className={className}>
+    <path d="M14 8h3V4.5c-.5-.1-1.8-.2-3.2-.2-3.2 0-5.3 1.9-5.3 5.5V13H5v4h3.5v6.7H13V17h3.5l.5-4H13V10c0-1.2.3-2 2-2Z" />
+  </svg>
+);
+
 export const WhatsAppIcon = ({ className = "size-5" }: P) => (
   <svg {...base} className={className}>
     <path d="M3.5 20.5l1.3-4.2A8.5 8.5 0 1 1 8 19.4z" />

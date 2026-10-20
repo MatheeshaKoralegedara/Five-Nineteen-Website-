@@ -3,7 +3,7 @@ import Image from "next/image";
 import { getFeatured, getSettings } from "@/db/queries";
 import { site } from "@/lib/site";
 import { PageHeader } from "@/components/PageHeader";
-import { ArrowIcon, InstagramIcon, MailIcon, PinIcon, WhatsAppIcon } from "@/components/icons";
+import { ArrowIcon, FacebookIcon, InstagramIcon, MailIcon, PinIcon, WhatsAppIcon } from "@/components/icons";
 
 export const metadata: Metadata = { title: "Contact" };
 
@@ -34,6 +34,14 @@ export default async function Contact() {
       value: `@${s.instagram}`,
       note: "Latest work & DMs",
       icon: <InstagramIcon className="size-6" />,
+      external: true,
+    },
+    s.facebook_url && {
+      href: s.facebook_url,
+      label: "Facebook",
+      value: "Facebook",
+      note: "Follow for updates",
+      icon: <FacebookIcon className="size-6" />,
       external: true,
     },
   ].filter(Boolean) as {

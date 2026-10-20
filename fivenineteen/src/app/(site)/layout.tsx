@@ -3,7 +3,7 @@ import { getSettings } from "@/db/queries";
 import { site } from "@/lib/site";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Logo } from "@/components/Logo";
-import { InstagramIcon, MailIcon, WhatsAppIcon } from "@/components/icons";
+import { FacebookIcon, InstagramIcon, MailIcon, WhatsAppIcon } from "@/components/icons";
 
 export default async function SiteLayout({ children }: { children: React.ReactNode }) {
   const s = await getSettings();
@@ -43,6 +43,13 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
                   </a>
                 </li>
               )}
+              {s.facebook_url && (
+                <li>
+                  <a href={s.facebook_url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2.5 transition hover:text-ivory">
+                    <FacebookIcon className="size-4" /> Facebook
+                  </a>
+                </li>
+              )}
               {s.whatsapp && (
                 <li>
                   <a href={`https://wa.me/${s.whatsapp}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2.5 transition hover:text-ivory">
@@ -65,6 +72,14 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
           <div className="mx-auto flex max-w-7xl flex-wrap justify-between gap-2 px-5 py-6 text-xs tracking-wide text-ivory/40 sm:px-8">
             <span>© {site.name}. All images protected.</span>
             <span>Photography by {site.photographer}</span>
+            <a
+              href="https://galacticweb.vercel.app/"
+              target="_blank"
+              rel="noreferrer"
+              className="transition hover:text-ivory"
+            >
+              Design and Develop by Galactic Web
+            </a>
           </div>
         </div>
       </footer>
