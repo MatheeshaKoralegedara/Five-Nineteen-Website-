@@ -60,7 +60,7 @@ export default async function Home() {
       {/* Intro */}
       <section className="mx-auto grid max-w-7xl items-center gap-14 px-5 py-24 sm:px-8 sm:py-32 lg:grid-cols-[1.1fr_1fr] lg:gap-24">
         <div className="reveal">
-          <Eyebrow>{site.name} Photography</Eyebrow>
+          <Eyebrow>{site.name} by Matheesha Koralegedara</Eyebrow>
           <p className="mt-8 font-display text-4xl font-light leading-[1.15] text-ink sm:text-5xl">
             {site.intro}
           </p>

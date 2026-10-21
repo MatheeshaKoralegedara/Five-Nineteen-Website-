@@ -12,7 +12,7 @@ export default async function Portfolio() {
   return (
     <>
       <PageHeader eyebrow="Portfolio" title={<>Stories, <em>one frame</em> at a time.</>}>
-        A collection of recent work — each gallery a different day, a different light, a different story.
+        A collection of recent work each gallery a different day, a different light, a different story.
       </PageHeader>
 
       <section className="mx-auto max-w-7xl px-5 pb-28 sm:px-8">

@@ -10,6 +10,7 @@ const FIELDS = [
   { key: "whatsapp", label: "WhatsApp number (e.g. 94771234567)", type: "text" },
   { key: "instagram", label: "Instagram username (without @)", type: "text" },
   { key: "facebook_url", label: "Facebook profile or page URL", type: "url" },
+  { key: "facebook_name", label: "Facebook page name (e.g. Five Nineteen by Matheesha Koralegedara)", type: "text" },
 ] as const;
 
 export default async function SettingsPage() {

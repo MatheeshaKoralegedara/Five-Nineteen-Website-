@@ -78,3 +78,14 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Lightbox on touch screens: swipe replaces the arrow buttons, and keep the toolbar clear of notches. */
+@media (hover: none) and (pointer: coarse) {
+  .yarl__navigation_prev,
+  .yarl__navigation_next {
+    display: none;
+  }
+}
+.yarl__toolbar {
+  padding-top: max(8px, env(safe-area-inset-top));
+}
