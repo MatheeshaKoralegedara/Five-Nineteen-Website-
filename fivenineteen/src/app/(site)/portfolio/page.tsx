@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getPublishedGalleries } from "@/db/queries";
+import { getPublishedGalleries, getSitePhotos } from "@/db/queries";
 import { GalleryCard } from "@/components/GalleryCard";
 import { PageHeader } from "@/components/PageHeader";
 import { CtaBand } from "@/components/CtaBand";
@@ -7,12 +7,12 @@ import { CtaBand } from "@/components/CtaBand";
 export const metadata: Metadata = { title: "Portfolio" };
 
 export default async function Portfolio() {
-  const list = await getPublishedGalleries();
+  const [list, picks] = await Promise.all([getPublishedGalleries(), getSitePhotos()]);
 
   return (
     <>
       <PageHeader eyebrow="Portfolio" title={<>Stories, <em>one frame</em> at a time.</>}>
-        A collection of recent work — each gallery a different day, a different light, a different story.
+        A collection of recent work each gallery a different day, a different light, a different story.
       </PageHeader>
 
       <section className="mx-auto max-w-7xl px-5 pb-28 sm:px-8">
@@ -38,7 +38,7 @@ export default async function Portfolio() {
         )}
       </section>
 
-      <CtaBand photo={list[0]?.cover ?? undefined} />
+      <CtaBand photo={picks.portfolio_cta ?? list[0]?.cover ?? undefined} />
     </>
   );
 }

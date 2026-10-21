@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { getFeatured, getSettings } from "@/db/queries";
+import { getFeatured, getSettings, getSitePhotos } from "@/db/queries";
 import { site } from "@/lib/site";
 import { PageHeader, Eyebrow } from "@/components/PageHeader";
 import { CtaBand } from "@/components/CtaBand";
@@ -10,11 +10,11 @@ import { ArrowIcon } from "@/components/icons";
 export const metadata: Metadata = { title: "About" };
 
 export default async function About() {
-  const [s, featured] = await Promise.all([getSettings(), getFeatured()]);
+  const [s, featured, picks] = await Promise.all([getSettings(), getFeatured(), getSitePhotos()]);
   const paragraphs = (s.about_text ?? "").split(/\n\s*\n/).filter(Boolean);
   const [lead, ...body] = paragraphs;
-  const portrait = featured[3] ?? featured[0];
-  const accent = featured[4] ?? featured[1];
+  const portrait = picks.about_portrait ?? featured[3] ?? featured[0];
+  const accent = picks.about_accent ?? featured[4] ?? featured[1];
 
   return (
     <>
@@ -80,7 +80,7 @@ export default async function About() {
         </section>
       )}
 
-      <CtaBand photo={featured[2] ?? featured[0]} />
+      <CtaBand photo={picks.about_cta ?? featured[2] ?? featured[0]} />
     </>
   );
 }

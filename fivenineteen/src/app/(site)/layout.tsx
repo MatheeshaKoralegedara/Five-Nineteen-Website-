@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getSettings } from "@/db/queries";
-import { site } from "@/lib/site";
+import { formatPhone, phoneDigits, site } from "@/lib/site";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Logo } from "@/components/Logo";
 import { FacebookIcon, InstagramIcon, MailIcon, WhatsAppIcon } from "@/components/icons";
@@ -46,14 +46,14 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
               {s.facebook_url && (
                 <li>
                   <a href={s.facebook_url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2.5 transition hover:text-ivory">
-                    <FacebookIcon className="size-4" /> Facebook
+                    <FacebookIcon className="size-4 shrink-0" /> {s.facebook_name || site.facebookName}
                   </a>
                 </li>
               )}
               {s.whatsapp && (
                 <li>
-                  <a href={`https://wa.me/${s.whatsapp}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2.5 transition hover:text-ivory">
-                    <WhatsAppIcon className="size-4" /> WhatsApp
+                  <a href={`https://wa.me/${phoneDigits(s.whatsapp)}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2.5 transition hover:text-ivory">
+                    <WhatsAppIcon className="size-4 shrink-0" /> {formatPhone(s.whatsapp)}
                   </a>
                 </li>
               )}

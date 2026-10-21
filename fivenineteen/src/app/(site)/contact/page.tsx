@@ -1,21 +1,21 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { getFeatured, getSettings } from "@/db/queries";
-import { site } from "@/lib/site";
+import { getFeatured, getSettings, getSitePhotos } from "@/db/queries";
+import { formatPhone, phoneDigits, site } from "@/lib/site";
 import { PageHeader } from "@/components/PageHeader";
 import { ArrowIcon, FacebookIcon, InstagramIcon, MailIcon, PinIcon, WhatsAppIcon } from "@/components/icons";
 
 export const metadata: Metadata = { title: "Contact" };
 
 export default async function Contact() {
-  const [s, featured] = await Promise.all([getSettings(), getFeatured()]);
-  const photo = featured[1] ?? featured[0];
+  const [s, featured, picks] = await Promise.all([getSettings(), getFeatured(), getSitePhotos()]);
+  const photo = picks.contact ?? featured[1] ?? featured[0];
 
   const channels = [
     s.whatsapp && {
-      href: `https://wa.me/${s.whatsapp}`,
+      href: `https://wa.me/${phoneDigits(s.whatsapp)}`,
       label: "WhatsApp",
-      value: `+${s.whatsapp}`,
+      value: formatPhone(s.whatsapp),
       note: "Fastest reply",
       icon: <WhatsAppIcon className="size-6" />,
       external: true,
@@ -39,7 +39,7 @@ export default async function Contact() {
     s.facebook_url && {
       href: s.facebook_url,
       label: "Facebook",
-      value: "Facebook",
+      value: s.facebook_name || site.facebookName,
       note: "Follow for updates",
       icon: <FacebookIcon className="size-6" />,
       external: true,
