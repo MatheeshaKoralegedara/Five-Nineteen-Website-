@@ -2,6 +2,7 @@ import { cacheLife, cacheTag } from "next/cache";
 import { and, asc, eq, inArray } from "drizzle-orm";
 import { db } from "@/db";
 import { galleries, photos, settings } from "@/db/schema";
+import { PHOTO_SLOTS, slotSettingKey, type PhotoSlot } from "@/lib/photoSlots";
 
 export const imageUrl = (key: string) => `${process.env.NEXT_PUBLIC_IMAGE_BASE}/${key}`;
 
@@ -82,6 +83,33 @@ export async function getFeatured() {
     .limit(10);
 
   return rows.map(toPublic);
+}
+
+/** Photos the admin pinned to fixed places on the site. Missing slots fall back to featured photos in the pages. */
+export async function getSitePhotos() {
+  "use cache";
+  cacheTag("portfolio");
+  cacheLife("hours");
+
+  const keys = PHOTO_SLOTS.map((s) => slotSettingKey(s.key));
+  const rows = await db.select().from(settings).where(inArray(settings.key, keys));
+  const chosen = new Map(rows.map((r) => [r.key, Number(r.value)]));
+  const ids = [...chosen.values()].filter((id) => Number.isInteger(id) && id > 0);
+  if (!ids.length) return {};
+
+  const pics = await db
+    .select(photoFields)
+    .from(photos)
+    .innerJoin(galleries, eq(photos.galleryId, galleries.id))
+    .where(and(inArray(photos.id, ids), eq(galleries.published, true)));
+  const byId = new Map(pics.map((p) => [p.id, toPublic(p)]));
+
+  const result: Partial<Record<PhotoSlot, PublicPhoto>> = {};
+  for (const { key } of PHOTO_SLOTS) {
+    const photo = byId.get(chosen.get(slotSettingKey(key)) ?? 0);
+    if (photo) result[key] = photo;
+  }
+  return result;
 }
 
 export async function getGallery(slug: string) {

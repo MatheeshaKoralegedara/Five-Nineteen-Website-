@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { getFeatured, getPublishedGalleries } from "@/db/queries";
+import { getFeatured, getPublishedGalleries, getSitePhotos } from "@/db/queries";
 import { site } from "@/lib/site";
 import { Masonry } from "@/components/Masonry";
 import { GalleryCard } from "@/components/GalleryCard";
@@ -10,9 +10,9 @@ import { Eyebrow } from "@/components/PageHeader";
 import { ArrowIcon, PinIcon } from "@/components/icons";
 
 export default async function Home() {
-  const [featured, list] = await Promise.all([getFeatured(), getPublishedGalleries()]);
+  const [featured, list, picks] = await Promise.all([getFeatured(), getPublishedGalleries(), getSitePhotos()]);
   const slides = featured.slice(0, 5);
-  const intro = featured[5] ?? featured[1] ?? featured[0];
+  const intro = picks.home_intro ?? featured[5] ?? featured[1] ?? featured[0];
   const totalPhotos = list.reduce((n, g) => n + g.count, 0);
 
   return (
@@ -142,7 +142,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <CtaBand photo={featured[2] ?? featured[0]} />
+      <CtaBand photo={picks.home_cta ?? featured[2] ?? featured[0]} />
     </>
   );
 }

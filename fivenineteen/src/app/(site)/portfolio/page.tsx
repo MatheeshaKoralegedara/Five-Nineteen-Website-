@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getPublishedGalleries } from "@/db/queries";
+import { getPublishedGalleries, getSitePhotos } from "@/db/queries";
 import { GalleryCard } from "@/components/GalleryCard";
 import { PageHeader } from "@/components/PageHeader";
 import { CtaBand } from "@/components/CtaBand";
@@ -7,7 +7,7 @@ import { CtaBand } from "@/components/CtaBand";
 export const metadata: Metadata = { title: "Portfolio" };
 
 export default async function Portfolio() {
-  const list = await getPublishedGalleries();
+  const [list, picks] = await Promise.all([getPublishedGalleries(), getSitePhotos()]);
 
   return (
     <>
@@ -38,7 +38,7 @@ export default async function Portfolio() {
         )}
       </section>
 
-      <CtaBand photo={list[0]?.cover ?? undefined} />
+      <CtaBand photo={picks.portfolio_cta ?? list[0]?.cover ?? undefined} />
     </>
   );
 }

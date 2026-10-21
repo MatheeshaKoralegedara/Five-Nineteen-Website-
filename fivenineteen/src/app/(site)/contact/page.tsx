@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { getFeatured, getSettings } from "@/db/queries";
+import { getFeatured, getSettings, getSitePhotos } from "@/db/queries";
 import { formatPhone, phoneDigits, site } from "@/lib/site";
 import { PageHeader } from "@/components/PageHeader";
 import { ArrowIcon, FacebookIcon, InstagramIcon, MailIcon, PinIcon, WhatsAppIcon } from "@/components/icons";
@@ -8,8 +8,8 @@ import { ArrowIcon, FacebookIcon, InstagramIcon, MailIcon, PinIcon, WhatsAppIcon
 export const metadata: Metadata = { title: "Contact" };
 
 export default async function Contact() {
-  const [s, featured] = await Promise.all([getSettings(), getFeatured()]);
-  const photo = featured[1] ?? featured[0];
+  const [s, featured, picks] = await Promise.all([getSettings(), getFeatured(), getSitePhotos()]);
+  const photo = picks.contact ?? featured[1] ?? featured[0];
 
   const channels = [
     s.whatsapp && {
