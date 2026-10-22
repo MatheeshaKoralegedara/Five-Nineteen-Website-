@@ -18,7 +18,7 @@ export default async function About() {
 
   return (
     <>
-      <PageHeader eyebrow="About" title={<>Hello, I&apos;m <em>{site.photographer.split(" ")[0]}</em>.</>} />
+      <PageHeader eyebrow="About" title={<>Hello, We are <em>FiveNineteen</em>.</>} />
 
       <section className="mx-auto grid max-w-7xl gap-14 px-5 pb-24 sm:px-8 lg:grid-cols-[1fr_1.1fr] lg:gap-24 lg:pb-32">
         <div className="reveal relative">
