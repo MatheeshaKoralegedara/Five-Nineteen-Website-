@@ -4,7 +4,7 @@ import { revalidatePath, updateTag } from "next/cache";
 import { eq, inArray } from "drizzle-orm";
 import { DeleteObjectCommand, DeleteObjectsCommand } from "@aws-sdk/client-s3";
 import { db } from "@/db";
-import { galleries, photos, settings } from "@/db/schema";
+import { galleries, packages, photos, settings } from "@/db/schema";
 import { r2 } from "@/lib/r2";
 import { requireAdmin } from "@/lib/auth";
 
@@ -137,6 +137,50 @@ export async function deletePhotos(ids: number[]) {
       }),
     );
   }
+  refresh();
+}
+
+/* --------------- Packages --------------- */
+
+export type PackageState = { ok: boolean; message: string } | null;
+
+/** Creates a package when the form has no id, otherwise updates it. */
+export async function savePackage(_prev: PackageState, form: FormData): Promise<PackageState> {
+  await requireAdmin();
+  const id = Number(form.get("id")) || null;
+  const data = {
+    name: String(form.get("name") ?? "").trim(),
+    price: String(form.get("price") ?? "").trim(),
+    description: String(form.get("description") ?? "").trim(),
+    features: String(form.get("features") ?? "").trim(),
+    highlighted: form.get("highlighted") === "on",
+    published: form.get("published") === "on",
+  };
+  if (!data.name) return { ok: false, message: "Name is required" };
+
+  if (id) {
+    await db.update(packages).set(data).where(eq(packages.id, id));
+  } else {
+    const existing = await db.select({ id: packages.id }).from(packages);
+    await db.insert(packages).values({ ...data, sortOrder: existing.length });
+  }
+  refresh();
+  return { ok: true, message: id ? "Saved" : "Package added" };
+}
+
+export async function reorderPackages(orderedIds: number[]) {
+  await requireAdmin();
+  await Promise.all(
+    orderedIds.map((id, i) =>
+      db.update(packages).set({ sortOrder: i }).where(eq(packages.id, id)),
+    ),
+  );
+  refresh();
+}
+
+export async function deletePackage(id: number) {
+  await requireAdmin();
+  await db.delete(packages).where(eq(packages.id, id));
   refresh();
 }
 

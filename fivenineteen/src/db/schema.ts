@@ -26,6 +26,17 @@ export const photos = pgTable("photos", {
     createdAt: timestamp("created_at").notNull().defaultNow(),  
 });
 
+export const packages = pgTable("packages", {
+    id: serial("id").primaryKey(),
+    name: text("name").notNull(),
+    price: text("price").notNull().default(""),
+    description: text("description").notNull().default(""),
+    features: text("features").notNull().default(""), // one per line
+    highlighted: boolean("highlighted").notNull().default(false),
+    published: boolean("published").notNull().default(false),
+    sortOrder: integer("sort_order").notNull().default(0),
+});
+
 export const settings = pgTable("settings", {
     key: text("key").primaryKey(),
     value: text("value").notNull(),

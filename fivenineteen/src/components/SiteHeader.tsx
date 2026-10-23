@@ -6,6 +6,7 @@ import { Logo } from "@/components/Logo";
 
 const links = [
   { href: "/portfolio", label: "Portfolio" },
+  { href: "/packages", label: "Packages" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];
@@ -58,7 +59,7 @@ function Header({ name, pathname }: { name: string; pathname: string }) {
         </Link>
 
         <div className="hidden items-center gap-9 md:flex">
-          {links.slice(0, 2).map((l) => (
+          {links.filter((l) => l.href !== "/contact").map((l) => (
             <NavLink key={l.href} href={l.href} active={pathname.startsWith(l.href)}>
               {l.label}
             </NavLink>

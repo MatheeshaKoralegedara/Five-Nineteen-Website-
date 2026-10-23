@@ -28,6 +28,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
             <h3 className="text-xs uppercase tracking-[0.3em] text-gold-soft">Explore</h3>
             <ul className="mt-5 space-y-3 text-sm">
               <li><Link href="/portfolio" className="transition hover:text-ivory">Portfolio</Link></li>
+              <li><Link href="/packages" className="transition hover:text-ivory">Packages</Link></li>
               <li><Link href="/about" className="transition hover:text-ivory">About</Link></li>
               <li><Link href="/contact" className="transition hover:text-ivory">Book a session</Link></li>
             </ul>

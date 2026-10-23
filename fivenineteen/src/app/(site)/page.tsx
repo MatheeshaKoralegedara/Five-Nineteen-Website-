@@ -74,7 +74,7 @@ export default async function Home() {
             href="/about"
             className="group mt-12 inline-flex items-center gap-3 text-xs font-medium uppercase tracking-[0.25em] text-ink"
           >
-            <span className="border-b border-ink pb-1 transition group-hover:border-gold group-hover:text-gold">More about me</span>
+            <span className="border-b border-ink pb-1 transition group-hover:border-gold group-hover:text-gold">More about us</span>
             <ArrowIcon className="size-4 transition group-hover:translate-x-1 group-hover:text-gold" />
           </Link>
         </div>

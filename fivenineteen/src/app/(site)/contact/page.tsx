@@ -56,10 +56,10 @@ export default async function Contact() {
       </PageHeader>
 
       <section className="mx-auto grid max-w-7xl gap-14 px-5 pb-28 sm:px-8 lg:grid-cols-[1.2fr_1fr] lg:gap-20">
-        <div>
-                <ContactForm />
+        <div className="min-w-0">
+          <ContactForm />
 
-                  <h2 className="mb-3 mt-12 font-medium">Or reach me directly</h2>
+          <h2 className="mb-3 mt-12 font-medium">Or reach me directly</h2>
 
           <ul className="divide-y divide-ink/10 border-y border-ink/10">
             {channels.map((c) => (
@@ -68,14 +68,16 @@ export default async function Contact() {
                   href={c.href}
                   target={c.external ? "_blank" : undefined}
                   rel={c.external ? "noreferrer" : undefined}
-                  className="group flex items-center gap-6 py-8 transition hover:pl-3"
+                  className="group flex items-center gap-4 py-6 transition hover:pl-3 sm:gap-6 sm:py-8"
                 >
-                  <span className="grid size-14 shrink-0 place-items-center rounded-full border border-ink/15 text-ink transition group-hover:border-gold group-hover:bg-gold group-hover:text-white">
+                  <span className="grid size-12 shrink-0 sm:size-14 place-items-center rounded-full border border-ink/15 text-ink transition group-hover:border-gold group-hover:bg-gold group-hover:text-white">
                     {c.icon}
                   </span>
                   <span className="min-w-0 flex-1">
-                    <span className="block text-xs uppercase tracking-[0.25em] text-gold">{c.label} · {c.note}</span>
-                    <span className="mt-1 block truncate font-display text-2xl text-ink sm:text-3xl">{c.value}</span>
+                    <span className="block text-xs uppercase tracking-[0.25em] text-gold">
+                      {c.label}<span className="hidden sm:inline"> · {c.note}</span>
+                    </span>
+                    <span className="mt-1 block font-display text-xl text-ink [overflow-wrap:anywhere] sm:text-3xl">{c.value}</span>
                   </span>
                   <ArrowIcon className="size-5 shrink-0 text-stone transition group-hover:translate-x-1 group-hover:text-gold" />
                 </a>
