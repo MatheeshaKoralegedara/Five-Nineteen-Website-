@@ -4,7 +4,11 @@ import { GalleryCard } from "@/components/GalleryCard";
 import { PageHeader } from "@/components/PageHeader";
 import { CtaBand } from "@/components/CtaBand";
 
-export const metadata: Metadata = { title: "Portfolio" };
+export const metadata: Metadata = {
+  title: "Portfolio",
+  description: "FIVENINETEEN by Matheesha Koralegedara — Graduations, Portraits, Birthday and stories from Sri Lanka.",
+  alternates: { canonical: "/portfolio" },
+};
 
 export default async function Portfolio() {
   const [list, picks] = await Promise.all([getPublishedGalleries(), getSitePhotos()]);

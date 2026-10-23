@@ -7,7 +7,11 @@ import { PageHeader, Eyebrow } from "@/components/PageHeader";
 import { CtaBand } from "@/components/CtaBand";
 import { ArrowIcon } from "@/components/icons";
 
-export const metadata: Metadata = { title: "About" };
+export const metadata: Metadata = {
+  title: "About",
+  description: "Meet the photographer behind FiveNineteen, based in Colombo & Kandy, Sri Lanka.",
+  alternates: { canonical: "/about" },
+};
 
 export default async function About() {
   const [s, featured, picks] = await Promise.all([getSettings(), getFeatured(), getSitePhotos()]);

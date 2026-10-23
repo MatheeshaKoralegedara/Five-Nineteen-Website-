@@ -2,7 +2,9 @@
 import { useActionState } from "react";
 import { sendInquiry, type ContactState } from "@/app/(site)/contact/actions";
 
-const field = "w-full rounded-lg border border-neutral-300 bg-white px-3 py-2 focus:border-black focus:outline-none";
+// min-w-0 stops date/select inputs from forcing the column wider than the screen
+const field =
+  "block w-full min-w-0 min-h-11 rounded-lg border border-neutral-300 bg-white px-3 py-2 text-base focus:border-black focus:outline-none";
 
 export function ContactForm() {
   const [state, action, pending] = useActionState<ContactState, FormData>(sendInquiry, null);
@@ -34,6 +36,7 @@ export function ContactForm() {
           <span className="mb-1 block text-sm font-medium">Type of shoot</span>
           <select name="shoot" className={field} defaultValue="">
             <option value="">Choose one</option>
+            <option>Graduation</option>
             <option>Wedding</option>
             <option>Engagement / Pre-shoot</option>
             <option>Portrait</option>
@@ -43,7 +46,8 @@ export function ContactForm() {
         </label>
         <label className="block sm:col-span-2">
           <span className="mb-1 block text-sm font-medium">Date (if known)</span>
-          <input name="date" type="date" className={field} />
+          {/* appearance-none: iOS Safari otherwise ignores the width and centers the date */}
+          <input name="date" type="date" className={`${field} appearance-none text-left`} />
         </label>
       </div>
 

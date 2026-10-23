@@ -8,6 +8,7 @@ import { HeroSlideshow } from "@/components/HeroSlideshow";
 import { CtaBand } from "@/components/CtaBand";
 import { Eyebrow } from "@/components/PageHeader";
 import { ArrowIcon, PinIcon } from "@/components/icons";
+import { LocalBusinessSchema } from "@/components/LocalBusinessSchema";
 
 export default async function Home() {
   const [featured, list, picks] = await Promise.all([getFeatured(), getPublishedGalleries(), getSitePhotos()]);
@@ -17,6 +18,7 @@ export default async function Home() {
 
   return (
     <>
+       <LocalBusinessSchema />
       {/* Hero */}
       <section className="relative h-svh min-h-[560px] w-full overflow-hidden bg-ink">
         <HeroSlideshow photos={slides} />
@@ -74,7 +76,7 @@ export default async function Home() {
             href="/about"
             className="group mt-12 inline-flex items-center gap-3 text-xs font-medium uppercase tracking-[0.25em] text-ink"
           >
-            <span className="border-b border-ink pb-1 transition group-hover:border-gold group-hover:text-gold">More about me</span>
+            <span className="border-b border-ink pb-1 transition group-hover:border-gold group-hover:text-gold">More about us</span>
             <ArrowIcon className="size-4 transition group-hover:translate-x-1 group-hover:text-gold" />
           </Link>
         </div>

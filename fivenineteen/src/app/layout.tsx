@@ -20,8 +20,20 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: { default: `${site.name} by Matheesha Koralegedara`, template: `%s — ${site.name}` },
+  metadataBase: new URL(site.url),
+  title: {
+    default: `${site.name} | Photography in ${site.location}`,
+    template: `%s | ${site.name}`,
+  },
   description: site.description,
+  openGraph: {
+    type: "website",
+    siteName: site.name,
+    locale: "en_LK",
+    url: site.url,
+  },
+  twitter: { card: "summary_large_image" },
+  alternates: { canonical: "/" },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

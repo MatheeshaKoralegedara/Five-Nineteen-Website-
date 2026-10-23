@@ -1,7 +1,7 @@
 import { cacheLife, cacheTag } from "next/cache";
 import { and, asc, eq, inArray } from "drizzle-orm";
 import { db } from "@/db";
-import { galleries, photos, settings } from "@/db/schema";
+import { galleries, packages, photos, settings } from "@/db/schema";
 import { PHOTO_SLOTS, slotSettingKey, type PhotoSlot } from "@/lib/photoSlots";
 
 export const imageUrl = (key: string) => `${process.env.NEXT_PUBLIC_IMAGE_BASE}/${key}`;
@@ -130,4 +130,32 @@ export async function getGallery(slug: string) {
     .orderBy(asc(photos.sortOrder), asc(photos.id));
 
   return { ...g, photos: list.map(toPublic) };
+}
+
+export async function getPackages() {
+  "use cache";
+  cacheTag("portfolio");
+  cacheLife("hours");
+
+  const list = await db
+    .select()
+    .from(packages)
+    .where(eq(packages.published, true))
+    .orderBy(asc(packages.sortOrder), asc(packages.id));
+
+  return list.map((p) => ({
+    ...p,
+    features: p.features.split("\n").map((f) => f.trim()).filter(Boolean),
+  }));
+}
+
+export async function getPublishedSlugs() {
+  "use cache";
+  cacheTag("portfolio");
+  cacheLife("hours");
+  const rows = await db
+    .select({ slug: galleries.slug })
+    .from(galleries)
+    .where(eq(galleries.published, true));
+  return rows.map((r) => r.slug);
 }
