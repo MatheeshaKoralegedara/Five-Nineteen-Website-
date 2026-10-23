@@ -4,6 +4,7 @@ import { getFeatured, getSettings, getSitePhotos } from "@/db/queries";
 import { formatPhone, phoneDigits, site } from "@/lib/site";
 import { PageHeader } from "@/components/PageHeader";
 import { ArrowIcon, FacebookIcon, InstagramIcon, MailIcon, PinIcon, WhatsAppIcon } from "@/components/icons";
+import { ContactForm } from "@/components/ContactForm";
 
 export const metadata: Metadata = { title: "Contact" };
 
@@ -56,7 +57,9 @@ export default async function Contact() {
 
       <section className="mx-auto grid max-w-7xl gap-14 px-5 pb-28 sm:px-8 lg:grid-cols-[1.2fr_1fr] lg:gap-20">
         <div>
-          {/* Contact form goes here in Step 8 */}
+                <ContactForm />
+
+                  <h2 className="mb-3 mt-12 font-medium">Or reach me directly</h2>
 
           <ul className="divide-y divide-ink/10 border-y border-ink/10">
             {channels.map((c) => (
