@@ -8,6 +8,7 @@ import { HeroSlideshow } from "@/components/HeroSlideshow";
 import { CtaBand } from "@/components/CtaBand";
 import { Eyebrow } from "@/components/PageHeader";
 import { ArrowIcon, PinIcon } from "@/components/icons";
+import { LocalBusinessSchema } from "@/components/LocalBusinessSchema";
 
 export default async function Home() {
   const [featured, list, picks] = await Promise.all([getFeatured(), getPublishedGalleries(), getSitePhotos()]);
@@ -17,6 +18,7 @@ export default async function Home() {
 
   return (
     <>
+       <LocalBusinessSchema />
       {/* Hero */}
       <section className="relative h-svh min-h-[560px] w-full overflow-hidden bg-ink">
         <HeroSlideshow photos={slides} />

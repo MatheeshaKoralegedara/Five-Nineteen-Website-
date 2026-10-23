@@ -6,7 +6,11 @@ import { PageHeader } from "@/components/PageHeader";
 import { ArrowIcon, FacebookIcon, InstagramIcon, MailIcon, PinIcon, WhatsAppIcon } from "@/components/icons";
 import { ContactForm } from "@/components/ContactForm";
 
-export const metadata: Metadata = { title: "Contact" };
+export const metadata: Metadata = {
+  title: "Contact & Booking",
+  description: "Check availability and book your Graduation, Portrait or Wedding session with FiveNineteen.",
+  alternates: { canonical: "/contact" },
+};
 
 export default async function Contact() {
   const [s, featured, picks] = await Promise.all([getSettings(), getFeatured(), getSitePhotos()]);

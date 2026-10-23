@@ -2,10 +2,44 @@ import { Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { getGallery } from "@/db/queries";
 import { Masonry } from "@/components/Masonry";
 import { CtaBand } from "@/components/CtaBand";
 import { ArrowIcon } from "@/components/icons";
+import type { Metadata } from "next";
+import { getGallery, getPublishedGalleries, getPublishedSlugs } from "@/db/queries";
+import { site } from "@/lib/site";
+
+export async function generateStaticParams() {
+  const slugs = await getPublishedSlugs();
+  // Cache Components needs at least one entry; this placeholder just shows a 404
+  return slugs.length ? slugs.map((slug) => ({ slug })) : [{ slug: "coming-soon" }];
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  "use cache";
+  const { slug } = await params;
+  const [gallery, list] = await Promise.all([getGallery(slug), getPublishedGalleries()]);
+  if (!gallery) return { title: "Gallery not found" };
+
+  const cover = list.find((g) => g.slug === slug)?.cover;
+  const description =
+    gallery.description || `${gallery.title} photography by ${site.name}, ${site.location}.`;
+
+  return {
+    title: gallery.title,
+    description,
+    alternates: { canonical: `/portfolio/${slug}` },
+    openGraph: {
+      title: `${gallery.title} | ${site.name}`,
+      description,
+      images: cover ? [{ url: cover.src, width: cover.width, height: cover.height, alt: cover.alt }] : undefined,
+    },
+  };
+}
 
 export default function GalleryPage({ params }: { params: Promise<{ slug: string }> }) {
   return (

@@ -1,9 +1,12 @@
 export const site = {
     name: "Five Nineteen",
+    url: "https://fivenineteen.com.lk",
     tagline: "Moments, honestly kept.",
-    description: "Photography by Matheesha Koralegedara — Graduations , Portraits, Birthday and stories from Sri Lanka.",
+    description: "Photography by Matheesha Koralegedara — Graduations, Portraits, Birthday and stories from Sri Lanka.",
     photographer: "Matheesha Koralegedara",
     location: "Colombo & Kandy, Sri Lanka",
+    city: "Colombo, Kandy",
+    country: "LK",
     facebookName: "Five Nineteen by Matheesha Koralegedara",
     intro:
         "I photograph people as they are the quiet glances, the loud laughter, the light that only lasts a minute. Images that feel like you, years from now.",

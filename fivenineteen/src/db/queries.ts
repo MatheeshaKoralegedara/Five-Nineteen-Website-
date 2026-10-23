@@ -148,3 +148,14 @@ export async function getPackages() {
     features: p.features.split("\n").map((f) => f.trim()).filter(Boolean),
   }));
 }
+
+export async function getPublishedSlugs() {
+  "use cache";
+  cacheTag("portfolio");
+  cacheLife("hours");
+  const rows = await db
+    .select({ slug: galleries.slug })
+    .from(galleries)
+    .where(eq(galleries.published, true));
+  return rows.map((r) => r.slug);
+}
