@@ -79,7 +79,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
               rel="noreferrer"
               className="transition hover:text-ivory"
             >
-              Design and Develop by Galactic Web
+              Design and Developed by Galactic Web
             </a>
           </div>
         </div>
